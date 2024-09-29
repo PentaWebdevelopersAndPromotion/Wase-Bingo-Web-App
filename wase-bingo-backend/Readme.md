@@ -25,6 +25,8 @@ This is the backend service for the Wase Bingo Web App. It provides APIs for man
     source venv/bin/activate
     pip install -r requirements.txt
     ```
+4. Place the 'serviceAccountKey.json' file in the root directory of the project.
+
 
 ## Usage
 
