@@ -1,18 +1,12 @@
 import random
 
 class Game:
-    def __init__(self, game_id):
+    def __init__(self, game_id, players = []):
         self.game_id = game_id
-        self.players = []
+        self.players = players
         self.called_numbers = set()
         self.winner = None
         self.state = "RUN"
-
-    def add_player(self, player):
-        if len(self.players) < 2:
-            self.players.append(player)
-            return True
-        return False
 
     def call_number(self):
         if self.state == "RUN":

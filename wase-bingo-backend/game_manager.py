@@ -9,14 +9,9 @@ class GameManager:
 
     def add_player_to_game(self, game_id, player):
         if game_id in self.games:
-            if self.games[game_id].add_player(player):
-                return True, "Player added"
-            else:
-                return False, "Game is full"
+            self.games[game_id].players.append(player)
+            return True, "Player added"
         return False, "Game not found"
-
-    def is_game_full(self, game_id):
-        return self.games[game_id].is_full()
 
     def get_game_status(self, game_id):
         if game_id in self.games:
@@ -25,5 +20,12 @@ class GameManager:
 
     def make_move(self, game_id, player_id, move):
         if game_id in self.games:
-            return self.games[game_id].make_move(player_id, move)
+            game = self.games[game_id]
+            # Assuming `move` is a number to be called in Bingo
+            number = game.call_number()
+            if number:
+                if game.check_winner():
+                    return True, {"status": game.get_status(), "winner": game.winner}
+                return True, {"status": game.get_status()}
+            return False, "No number called"
         return False, "Game not found"

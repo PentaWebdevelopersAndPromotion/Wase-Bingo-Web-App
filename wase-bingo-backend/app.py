@@ -10,9 +10,11 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 socketio = SocketIO(app, cors_allowed_origins="*")
 
-# Initialize the room manager to handle multiple rooms
-room_manager = RoomManager()
+# Initialize the game manager
 game_manager = GameManager()
+
+# Initialize the room manager to handle multiple rooms
+room_manager = RoomManager(game_manager, socketio)
 
 @app.route('/rooms', methods=['GET'])
 def get_rooms():
@@ -63,22 +65,6 @@ def handle_move(data):
             emit('error', {'message': response})
     except Exception as e:
         emit('error', {'message': str(e)})
-
-
-
-@socketio.on('make_move')
-def handle_move(data):
-    game_id = data['game_id']
-    player_id = data['player_id']
-    move = data['move']
-
-    result, response = game_manager.make_move(game_id, player_id, move)
-    if result:
-        socketio.emit('update', {'game_id': game_id, 'status': response}, room=game_id)
-        if 'winner' in response:
-            socketio.emit('winner_announcement', {'game_id': game_id, 'winner': response['winner']}, room=game_id)
-    else:
-        emit('error', {'message': response})
 
 @socketio.on('connect')
 def handle_connect():
