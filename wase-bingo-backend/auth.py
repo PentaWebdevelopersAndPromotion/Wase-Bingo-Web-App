@@ -1,3 +1,5 @@
+from player import Player
+
 # Simulate a Firebase-like authentication
 firebase_db = {
     "users": {
@@ -8,7 +10,7 @@ firebase_db = {
             "lastInteraction": 1727467859589,
             "lastName": "Unknown",
             "phoneNumber": "+251935993930",
-            "securityCode": 21073,
+            "securityCode": '21073',
             "status": "active"
         },
         "5169578668": {
@@ -18,16 +20,20 @@ firebase_db = {
             "lastInteraction": 1727468195879,
             "lastName": "Unknown",
             "phoneNumber": "+251978011557",
-            "securityCode": 13664,
+            "securityCode": '13664',
             "status": "active"
         }
     }
 }
 
-from game import Player
-
 def authenticate_user(user_id, security_code):
+    print(f"Authenticating user {user_id} with security code {security_code}")
     user = firebase_db['users'].get(user_id)
-    if user and user['securityCode'] == security_code:
+
+    # JSONify the user then print it
+    print(user)
+
+    if user and user['securityCode'] == str(security_code):
+        print(f"User {user_id} authenticated")
         return Player(user_id, user['balance'])
     return None

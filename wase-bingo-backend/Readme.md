@@ -6,8 +6,10 @@ This is the backend service for the Wase Bingo Web App. It provides APIs for man
 - [Installation](#installation)
 - [Usage](#usage)
 - [API Endpoints](#api-endpoints)
-- [Contributing](#contributing)
-- [License](#license)
+    - [Create Game](#create-game)
+    - [Join Room](#join-room)
+    - [Game Status](#game-status)
+    - [WebSocket Events](#websocket-events)
 
 ## Installation
 
